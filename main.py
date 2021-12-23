@@ -13,11 +13,15 @@ load_dotenv()
 
 @bot.command()
 async def name(ctx, race: str, gender: str):
+    race = race.lower()
+    gender = gender.lower()
     await ctx.reply(function.fantasy_race_name(race, gender))
 
 
 @bot.command()
 async def human_name(ctx, ethnicity: str, gender: str):
+    ethnicity = ethnicity.lower()
+    gender = gender.lower()
     await ctx.reply(function.human_ethnicity(ethnicity, gender))
 
 
