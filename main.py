@@ -1,7 +1,11 @@
+from os import getenv
+
 from discord.ext import commands
 from dotenv import load_dotenv
+
 import name_functions
-from os import getenv
+
+import dice
 
 # NAME GENERATOR!!!
 bot = commands.Bot(command_prefix='$')
@@ -32,5 +36,10 @@ async def name_options(ctx):
                     'supported:* arabic, celtic, chinese, english, egyptian, french, german greek, indian, japanese, '
                     'mesoamerican, niger-congo, norse, polynesian, roman, slavic, and spanish.')
 
+
+@bot.command()
+async def roll(ctx, num_sides: int, modifier: int):
+    result = dice.roll_dice(num_sides) + modifier
+    await ctx.reply(result)
 
 bot.run(getenv('TOKEN'))
