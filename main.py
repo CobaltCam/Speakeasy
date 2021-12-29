@@ -38,9 +38,9 @@ async def name_options(ctx):
 
 
 @bot.command()
-async def roll(ctx, num_sides: int, modifier: int):
-    result = dice.roll_dice(num_sides)
-    total = result + modifier 
-    await ctx.reply(f"Rolled 1d{num_sides}+{modifier}: You rolled a {total} <{result} + {modifier}>")
+async def roll(ctx,num_dice: int,  num_sides: int, modifier: int):
+    result = dice.roll_dice(num_dice, num_sides)
+    total = result + modifier
+    await ctx.reply(f"Rolled {num_dice}d{num_sides}+{modifier}: You rolled a {total} <{dice.rolls} + {modifier}>")
 
 bot.run(getenv('TOKEN'))
