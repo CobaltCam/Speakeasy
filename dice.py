@@ -1,5 +1,11 @@
 import random
 
-def roll_dice(num_sides: int):
-    return random.randrange(1, num_sides)
-    
+rolls = []
+
+def roll_dice(num_dice: int, num_sides: int):
+    roll = 0
+    for i in range(0, num_dice):
+        roll = roll + random.randrange(1, num_sides)
+        rolls.append(roll)
+
+    return roll
