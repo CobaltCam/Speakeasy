@@ -4,12 +4,14 @@ from discord.ext import commands
 from dotenv import load_dotenv
 
 import name_functions
+import hitpoint_counter as hp
 
 import dice
 
 # NAME GENERATOR!!!
 bot = commands.Bot(command_prefix='$')
 function = name_functions
+hp = hp.HitPointTracker()
 load_dotenv()
 
 
@@ -38,9 +40,40 @@ async def name_options(ctx):
 
 
 @bot.command()
-async def roll(ctx,num_dice: int,  num_sides: int, modifier: int):
+async def roll(ctx, num_dice: int, num_sides: int, modifier: int):
     dice.roll_dice(num_dice, num_sides)
-    total = sum(dice.rolls) + modifier
+    total = sum(dice.rolls) + modifier,
     await ctx.reply(f"Rolled {num_dice}d{num_sides}+{modifier}: You rolled a {total} <{dice.rolls} + {modifier}>")
+
+
+# -----------------------------------------HitpointCounter--------------------------------------------------------------#
+
+@bot.command()
+async def reset(ctx):
+    await ctx.send(hp.encounter_start())
+
+
+@bot.command()
+async def add(ctx, com_name: str, hitpoints: int):
+    await ctx.send(hp.add_combatant(com_name, hitpoints))
+
+
+@bot.command()
+async def check(ctx, combatant: str):
+    await ctx.send(hp.check_combatant(combatant))
+
+
+@bot.command()
+async def remove(ctx, combatant: str):
+    await ctx.send(hp.remove_combatant(combatant))
+
+@bot.command()
+async def update(ctx, combatant: str, value: int):
+    await ctx.send(hp.update_hitpoints(combatant, value))
+
+@bot.command()
+async def list(ctx):
+    await ctx.send(hp.list_hitpoints())
+
 
 bot.run(getenv('TOKEN'))
